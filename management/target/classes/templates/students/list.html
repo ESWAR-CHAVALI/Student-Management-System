@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Student List</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Student Management System</h1>
+
+<form th:action="@{/students/search}" method="get">
+  <input type="text" name="keyword" placeholder="Search by name or class" th:value="${keyword}">
+  <button type="submit">Search</button>
+  <a th:href="@{/students}">Reset</a>
+</form>
+
+<a th:href="@{/students/add}">Add New Student</a>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Class Name</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${students == null or #lists.isEmpty(students)}">
+    <td colspan="7">No students found.</td>
+  </tr>
+  <tr th:each="student : ${students}" th:if="${students != null and !#lists.isEmpty(students)}">
+    <td th:text="${student.studentId}">1</td>
+    <td th:text="${student.name}">Name</td>
+    <td th:text="${student.age}">20</td>
+    <td th:text="${student.className}">10-A</td>
+    <td th:text="${student.email}">email@example.com</td>
+    <td th:text="${student.address}">City</td>
+    <td>
+      <a th:href="@{/students/edit/{id}(id=${student.studentId})}">Edit</a>
+      <a th:href="@{/students/delete/{id}(id=${student.studentId})}" onclick="return confirm('Are you sure?')">Delete</a>
+    </td>
+  </tr>
+<!-- Pagination -->
+<div th:if="${currentPage != null and totalPages != null}">
+  <span th:text="'Page ' + (${currentPage + 1}) + ' of ' + ${totalPages}"></span>
+  <div>
+    <a th:if="${currentPage > 0}" th:href="@{/students(page=${currentPage - 1}, keyword=${keyword})}">Previous</a>
+    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/students(page=${currentPage + 1}, keyword=${keyword})}">Next</a>
+  </div>
+</div>
+    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/students(page=${currentPage + 1}, keyword=${keyword})}">Next</a>
+  </div>
+</div>
+</body>
+</html>

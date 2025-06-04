@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Student</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+  <style>
+    body { background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); min-height: 100vh; }
+    .container { max-width: 650px; margin-top: 50px; background: #fff; padding: 35px 40px; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08);}
+    .form-label { font-weight: 600; }
+    .form-control:focus { border-color: #6c63ff; box-shadow: 0 0 0 0.2rem rgba(108,99,255,.15);}
+    .btn { min-width: 110px; }
+    .form-title { letter-spacing: 1px; color: #6c63ff; }
+    .mb-4 { margin-bottom: 1.8rem !important; }
+    .mb-3 { margin-bottom: 1.2rem !important; }
+    .required-star { color: #e74c3c; margin-left: 2px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2 class="mb-4 form-title text-center">Add Student</h2>
+  <form th:action="@{/students/add}" th:object="${student}" method="post" autocomplete="off">
+    <div class="mb-3">
+      <label class="form-label" for="name">Name <span class="required-star">*</span></label>
+      <input th:field="*{name}" id="name" class="form-control" placeholder="Enter full name" required aria-required="true"/>
+      <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="age">Age <span class="required-star">*</span></label>
+      <input type="number" th:field="*{age}" id="age" class="form-control" min="1" max="120" placeholder="Enter age" required aria-required="true"/>
+      <div class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="studentClass">Class <span class="required-star">*</span></label>
+      <input th:field="*{studentClass}" id="studentClass" class="form-control" placeholder="Enter class/grade" required aria-required="true"/>
+      <div class="text-danger" th:if="${#fields.hasErrors('studentClass')}" th:errors="*{studentClass}"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="email">Email <span class="required-star">*</span></label>
+      <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="Enter email address" required aria-required="true"/>
+      <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="address">Address <span class="required-star">*</span></label>
+      <textarea th:field="*{address}" id="address" class="form-control" rows="2" placeholder="Enter address" required aria-required="true"></textarea>
+      <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+    </div>
+    <div class="d-flex gap-3 justify-content-center mt-4">
+      <button type="submit" class="btn btn-success px-4">Submit</button>
+      <a th:href="@{/students}" class="btn btn-secondary px-4">Back</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>
